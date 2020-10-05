@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-export default function Display() {
+export default function Display(props) {
     return (
-        <div>
-            Hello from display!
+        <div id="display">
+            <div id="fe">
+                {props.fe}
+            </div>
+            <div id="ce">
+                {props.ce}
+            </div>
         </div>
     )
 }
