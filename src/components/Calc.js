@@ -13,16 +13,20 @@ export default class Calc extends Component {
         this.state = {
             functions: functions,
             numbers: numbers,
-            display: "Hello from display!",
             fullExp: "Hi from full expression",
             currentExp: "Hi from current expression"
         }
     }
 
-    setDisplay(s) {
+    clear() {
         this.setState({
-
+            fullExp: "",
+            currentExp: "0"
         });
+    }
+
+    handleClick(e) {
+        // console.log(e.target.classList[0]);
     }
 
     render() {
@@ -33,7 +37,7 @@ export default class Calc extends Component {
 
                 <Display fe={fullExp} ce={currentExp} />
 
-                <Panel btns={{ functions, numbers }} />
+                <Panel btns={{ functions, numbers }} click={this.handleClick} />
 
             </div>
         )
