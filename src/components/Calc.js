@@ -3,55 +3,39 @@ import React, { Component } from 'react';
 import Display from './Display';
 import Panel from './Panel';
 
+import functions from '../data/functions';
+import numbers from '../data/numbers';
+
 export default class Calc extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             functions: functions,
-            numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            numbers: numbers,
+            display: "Hello from display!",
+            fullExp: "Hi from full expression",
+            currentExp: "Hi from current expression"
         }
     }
 
+    setDisplay(s) {
+        this.setState({
+
+        });
+    }
+
     render() {
-        let { functions, numbers } = this.state;
+        let { functions, numbers, fullExp, currentExp } = this.state;
 
         return (
             <div id="calc">
-                <Display />
+
+                <Display fe={fullExp} ce={currentExp} />
+
                 <Panel btns={{ functions, numbers }} />
+
             </div>
         )
     }
 }
-
-const functions = [
-    {
-        id: "delete",
-        symbol: "AC"
-    },
-    {
-        id: "divide",
-        symbol: "/"
-    },
-    {
-        id: "mult",
-        symbol: "X"
-    },
-    {
-        id: "sub",
-        symbol: "-"
-    },
-    {
-        id: "add",
-        symbol: "+"
-    },
-    {
-        id: "equals",
-        symbol: "="
-    },
-    {
-        id: "period",
-        symbol: "."
-    }
-];
