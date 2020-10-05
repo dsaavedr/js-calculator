@@ -16,6 +16,8 @@ export default class Calc extends Component {
             fullExp: "Hi from full expression",
             currentExp: "Hi from current expression"
         }
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
     clear() {
@@ -26,7 +28,18 @@ export default class Calc extends Component {
     }
 
     handleClick(e) {
-        // console.log(e.target.classList[0]);
+        let type = e.target.classList[0];
+        let value = e.target.innerText;
+
+        type === "number" ? this.handleNumber(value) : this.handleSymbol(value);
+    }
+
+    handleNumber(val) {
+        console.log(val);
+    }
+
+    handleSymbol(val) {
+        console.log(val);
     }
 
     render() {
