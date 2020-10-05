@@ -9,7 +9,7 @@ export default function Panel(props) {
     });
 
     const nums = numbers.map((item, idx) => {
-        return <Button id={"n-" + item} className="number" key={idx}>{item}</Button>
+        return <Button id={item.id} className="number" key={idx}>{item.value}</Button>
     });
 
     return (
