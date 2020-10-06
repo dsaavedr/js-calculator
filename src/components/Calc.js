@@ -12,9 +12,11 @@ export default class Calc extends Component {
 
         this.state = {
             functions: functions,
-            numbers: numbers,
-            fullExp: "Hi from full expression",
-            currentExp: "Hi from current expression"
+            numbers: numbers.reverse(),
+            addedDecimal: false,
+            addedOperator: false,
+            fullExp: "0",
+            currentExp: "0"
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -22,7 +24,9 @@ export default class Calc extends Component {
 
     clear() {
         this.setState({
-            fullExp: "",
+            addedDecimal: false,
+            addedOperator: false,
+            fullExp: "0",
             currentExp: "0"
         });
     }
@@ -35,11 +39,85 @@ export default class Calc extends Component {
     }
 
     handleNumber(val) {
-        console.log(val);
+        if (this.state.currentExp === "0" && val !== "0") {
+            if (this.state.fullExp === "0") {
+                this.setState(state => ({
+                    fullExp: val,
+                    currentExp: val
+                }));
+            } else {
+                this.setState(state => ({
+                    fullExp: state.fullExp + val,
+                    currentExp: val
+                }));
+            }
+        } else if (this.state.currentExp !== "0") {
+            this.setState(state => ({
+                fullExp: state.fullExp + val,
+                currentExp: state.currentExp + val
+            }));
+        }
     }
 
     handleSymbol(val) {
-        console.log(val);
+        switch (val) {
+            case "AC":
+                this.clear();
+                break;
+            case "/":
+            case "x":
+            case "-":
+            case "+":
+                this.handleOperator(val);
+                break;
+            case ".":
+                this.handlePeriod();
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleOperator(val) {
+        if (this.state.addedOperator) {
+            this.setState(state => ({
+                fullExp: state.fullExp.slice(0, -1) + val,
+                currentExp: val
+            }));
+        } else {
+            this.setState(state => ({
+                fullExp: state.fullExp + val,
+                currentExp: val,
+                addedOperator: true,
+                addedDecimal: false
+            }));
+        }
+    }
+
+    handlePeriod() {
+        if (!this.state.addedDecimal) {
+            if (/\d/.test(this.state.fullExp.slice(-1))) {
+                this.setState(state => ({
+                    addedDecimal: true,
+                    fullExp: state.fullExp + ".",
+                    currentExp: state.currentExp + "."
+                }));
+            } else {
+                if (this.state.fullExp !== "0") {
+                    this.setState(state => ({
+                        addedDecimal: true,
+                        fullExp: state.fullExp + "0.",
+                        currentExp: state.currentExp + "0."
+                    }));
+                } else {
+                    this.setState(state => ({
+                        addedDecimal: true,
+                        fullExp: state.fullExp + ".",
+                        currentExp: state.currentExp + "."
+                    }));
+                }
+            }
+        }
     }
 
     render() {
@@ -48,7 +126,7 @@ export default class Calc extends Component {
         return (
             <div id="calc">
 
-                <Display fe={fullExp} ce={currentExp} />
+                <Display fe={fullExp === "0" ? null : fullExp} ce={currentExp} />
 
                 <Panel btns={{ functions, numbers }} click={this.handleClick} />
 
