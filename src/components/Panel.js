@@ -13,8 +13,7 @@ export default function Panel(props) {
     });
 
     return (
-        <div>
-            Hello from panel!
+        <div id="panel">
             {funcs}
             {nums}
         </div>
