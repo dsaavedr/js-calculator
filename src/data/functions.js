@@ -9,7 +9,7 @@ export default [
     },
     {
         id: "multiply",
-        symbol: "X"
+        symbol: "x"
     },
     {
         id: "subtract",
