@@ -23,6 +23,7 @@ export default class Calc extends Component {
         }
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleSymbol = this.handleSymbol.bind(this);
     }
 
     clear() {
@@ -95,12 +96,19 @@ export default class Calc extends Component {
     }
 
     handleOperator(val) {
-        if (this.state.addedOperator) {
-            this.setState(state => ({
-                fullExp: state.fullExp.slice(0, -1) + val,
-                currentExp: val
-            }));
-        } else {
+        let { fullExp } = this.state;
+
+        if (this.state.addedOperator && val !== "-") {
+            if (!/\d/.test(fullExp.substring(fullExp.length - 1))) {
+                this.setState(state => ({
+                    fullExp: state.fullExp.slice(0, -1) + val,
+                    currentExp: val
+                }));
+            } else {
+                this.equals();
+                // this.equals(this.handleSymbol, val);
+            }
+        } else if (fullExp.substring(fullExp.length - 1) !== "-") {
             this.setState(state => ({
                 fullExp: state.fullExp + val,
                 currentExp: val,
@@ -136,7 +144,7 @@ export default class Calc extends Component {
         }
     }
 
-    equals() {
+    equals(callback, val) {
         const s = this.state.fullExp;
         let res;
 
@@ -158,7 +166,7 @@ export default class Calc extends Component {
             showingResult: true,
             addedOperator: false,
             addedDecimal: false
-        }));
+        }), callback ? callback(val) : null);
     }
 
     operate(n1, n2, op) {
