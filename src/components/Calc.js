@@ -139,7 +139,7 @@ export default class Calc extends Component {
         let res;
 
         let numbers = s.match(/\d+\.*\d*/g);
-        const op = s.match(/[^\.\d]/);
+        const op = s.match(/[^.\d]/);
 
         numbers = numbers.map(n => parseFloat(n));
 
