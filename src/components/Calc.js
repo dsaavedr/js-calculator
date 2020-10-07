@@ -41,7 +41,9 @@ export default class Calc extends Component {
     }
 
     handleNumber(val) {
-
+        if (this.state.showingResult) {
+            this.clear();
+        }
         if (this.state.currentExp === "0" && val !== "0") {
             if (this.state.fullExp === "0") {
                 this.setState(state => ({
@@ -66,7 +68,6 @@ export default class Calc extends Component {
         if (this.state.showingResult) {
             this.setState(state => ({
                 showingResult: false,
-                addedDecimal: false,
                 fullExp: "" + state.currentExp
             }));
         }
