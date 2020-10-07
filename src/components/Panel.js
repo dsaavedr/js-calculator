@@ -5,11 +5,11 @@ export default function Panel(props) {
     const { functions, numbers } = props.btns;
 
     const funcs = functions.map((item, idx) => {
-        return <Button id={item.id} className="function" key={idx} onClick={props.click} >{item.symbol}</Button>
+        return <Button id={item.id} className="function" key={"f" + idx} onClick={props.click} >{item.symbol}</Button>
     });
 
     const nums = numbers.map((item, idx) => {
-        return <Button id={item.id} className="number" key={idx} onClick={props.click} >{item.value}</Button>
+        return <Button id={item.id} className="number" key={"n" + idx} onClick={props.click} >{item.value}</Button>
     });
 
     return (
