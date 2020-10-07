@@ -15,6 +15,7 @@ export default class Calc extends Component {
             numbers: numbers.reverse(),
             addedDecimal: false,
             addedOperator: false,
+            showingResult: false,
             fullExp: "0",
             currentExp: "0"
         }
@@ -26,6 +27,7 @@ export default class Calc extends Component {
         this.setState({
             addedDecimal: false,
             addedOperator: false,
+            showingResult: false,
             fullExp: "0",
             currentExp: "0"
         });
@@ -39,6 +41,7 @@ export default class Calc extends Component {
     }
 
     handleNumber(val) {
+
         if (this.state.currentExp === "0" && val !== "0") {
             if (this.state.fullExp === "0") {
                 this.setState(state => ({
@@ -60,6 +63,13 @@ export default class Calc extends Component {
     }
 
     handleSymbol(val) {
+        if (this.state.showingResult) {
+            this.setState(state => ({
+                showingResult: false,
+                addedDecimal: false,
+                fullExp: "" + state.currentExp
+            }));
+        }
         switch (val) {
             case "AC":
                 this.clear();
@@ -72,6 +82,9 @@ export default class Calc extends Component {
                 break;
             case ".":
                 this.handlePeriod();
+                break;
+            case "=":
+                this.equals();
                 break;
             default:
                 break;
@@ -117,6 +130,46 @@ export default class Calc extends Component {
                     }));
                 }
             }
+        }
+    }
+
+    equals() {
+        const s = this.state.fullExp;
+        let res;
+
+        let numbers = s.match(/\d+\.*\d*/g);
+        const op = s.match(/[^\.\d]/);
+
+        numbers = numbers.map(n => parseFloat(n));
+
+        if (numbers.length > 1) {
+            res = this.operate(numbers[0], numbers[1], op[0]);
+        } else {
+            res = numbers[0];
+        }
+        res = parseFloat(res.toFixed(6));
+
+        this.setState(state => ({
+            fullExp: state.fullExp + "=" + res,
+            currentExp: res,
+            showingResult: true,
+            addedOperator: false,
+            addedDecimal: false
+        }));
+    }
+
+    operate(n1, n2, op) {
+        switch (op) {
+            case "/":
+                return n1 / n2;
+            case "x":
+                return n1 * n2;
+            case "-":
+                return n1 - n2;
+            case "+":
+                return n1 + n2;
+            default:
+                break;
         }
     }
 
