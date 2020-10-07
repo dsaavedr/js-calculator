@@ -5,9 +5,10 @@
 $primaryColor: #fdba34
 $secondaryColor: #0C0A3E
 $lightGray: #ddd
-$offWhite: #eee
+$offWhite: #efefef
 $mainTransition: all 0.3s linear
 $mobileWidth: 768px
+$displayHeight: 80px
 
 // Globals
 
@@ -22,24 +23,33 @@ body
   display: flex
   justify-content: center
   align-items: center
+  background: $offWhite
 
 // Calc
 
 #calc
   display: flex
   flex-direction: column
-  padding: 2em 1em
-
+  // padding: 2em 1em
+  min-width: 400px
+  height: 500px
+  overflow: hidden
+  box-shadow: 0 2.8px 7.5px rgba(0, 0, 0, 0.021),
+  0 6.7px 15.5px rgba(0, 0, 0, 0.038),
+  0 12.5px 25.1px rgba(0, 0, 0, 0.057),
+  0 22.3px 38.6px rgba(0, 0, 0, 0.082),
+  0 41.8px 62.5px rgba(0, 0, 0, 0.12),
+  0 100px 131px rgba(0, 0, 0, 0.21)
 // Display
 
 #display
   background: black
   color: white
-  height: 50px
+  height: $displayHeight
   display: flex
   flex-direction: column
   padding: 0 5px
-  justify-content: flex-end
+  justify-content: space-evenly
 
   div
     text-align: right
@@ -48,6 +58,7 @@ body
 
 #panel
   display: grid
+  height: calc(100% - #{$displayHeight})
   grid-auto-flow: row dense
   grid-template-columns: repeat(4, 1fr)
   grid-template-rows: repeat(5, 1fr)
