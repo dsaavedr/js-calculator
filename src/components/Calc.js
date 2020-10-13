@@ -72,6 +72,7 @@ export default class Calc extends Component {
                 fullExp: "" + state.currentExp
             }));
         }
+
         switch (val) {
             case "AC":
                 this.clear();
@@ -102,9 +103,13 @@ export default class Calc extends Component {
                     fullExp: state.fullExp.slice(0, -1) + val,
                     currentExp: val
                 }));
-            } else {
-                this.equals();
-                // this.equals(this.handleSymbol, val);
+            } else if (fullExp.substring(fullExp.length - 1) !== "-") {
+                this.setState(state => ({
+                    fullExp: state.fullExp + val,
+                    currentExp: val,
+                    addedOperator: true,
+                    addedDecimal: false
+                }));
             }
         } else if (fullExp.substring(fullExp.length - 1) !== "-") {
             this.setState(state => ({
@@ -147,19 +152,22 @@ export default class Calc extends Component {
         let res;
 
         let numbers = s.match(/-{0,1}\d+\.*\d*/g);
-        const op = s.match(/[^-.\d]/g) || [];
+        let op = s.match(/[^.\d]/g) || [];
 
-        if (op.length < 2 && op[0] === "-") {
-            op[0] = "+";
-        }
+        op = op.map(val => val === "-" ? "+" : val);
 
         numbers = numbers.map(n => parseFloat(n));
 
+        let test = numbers;
+
         if (numbers.length > 1) {
-            res = this.operate(numbers[0], numbers[1], op[0]);
+            res = test.reduce((acc, curr, idx) => {
+                return this.operate(acc, curr, op[idx - 1]);
+            });
         } else {
             res = numbers[0];
         }
+
         res = parseFloat(res.toFixed(6));
 
         this.setState(state => ({
