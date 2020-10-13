@@ -2,11 +2,11 @@ import React from 'react';
 
 export default function Display(props) {
     return (
-        <div id="display">
+        <div className="display">
             <div id="fe">
                 {props.fe}
             </div>
-            <div id="ce">
+            <div id="display">
                 {props.ce}
             </div>
         </div>
