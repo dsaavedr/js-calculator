@@ -6,8 +6,6 @@ import Panel from './Panel';
 import functions from '../data/functions';
 import numbers from '../data/numbers';
 
-// TODO: Add exceptions for handling the '-' sign when it should mean a negative number
-
 export default class Calc extends Component {
     constructor(props) {
         super(props);
