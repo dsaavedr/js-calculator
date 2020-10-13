@@ -148,8 +148,14 @@ export default class Calc extends Component {
         const s = this.state.fullExp;
         let res;
 
-        let numbers = s.match(/\d+\.*\d*/g);
-        const op = s.match(/[^.\d]/);
+        let numbers = s.match(/-{0,1}\d+\.*\d*/g);
+        console.log(numbers);
+        const op = s.match(/[^-.\d]/g) || [];
+        console.log(op);
+
+        if (op.length < 2 && op[0] === "-") {
+            op[0] = "+";
+        }
 
         numbers = numbers.map(n => parseFloat(n));
 
@@ -180,7 +186,7 @@ export default class Calc extends Component {
             case "+":
                 return n1 + n2;
             default:
-                break;
+                return n1 + n2;
         }
     }
 
