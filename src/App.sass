@@ -7,6 +7,7 @@ $secondaryColor: #0C0A3E
 $lightGray: #ddd
 $offWhite: #efefef
 $mainTransition: all 0.3s linear
+$quickTransition: all 0.1s linear
 $mobileWidth: 768px
 $displayHeight: 80px
 
@@ -40,6 +41,7 @@ body
   0 22.3px 38.6px rgba(0, 0, 0, 0.082),
   0 41.8px 62.5px rgba(0, 0, 0, 0.12),
   0 100px 131px rgba(0, 0, 0, 0.21)
+
 // Display
 
 #display
@@ -48,7 +50,7 @@ body
   height: $displayHeight
   display: flex
   flex-direction: column
-  padding: 0 5px
+  padding: 0 20px
   justify-content: space-evenly
 
   div
@@ -69,9 +71,14 @@ body
     color: black
     border-radius: 0
     border: none
+    transition: $quickTransition
 
     &:active, &:focus
       box-shadow: none
+
+    &:hover
+      font-size: 1.5em
+      font-weight: 600
 
   #clear
     background: red
