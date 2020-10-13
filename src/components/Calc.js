@@ -149,9 +149,7 @@ export default class Calc extends Component {
         let res;
 
         let numbers = s.match(/-{0,1}\d+\.*\d*/g);
-        console.log(numbers);
         const op = s.match(/[^-.\d]/g) || [];
-        console.log(op);
 
         if (op.length < 2 && op[0] === "-") {
             op[0] = "+";
