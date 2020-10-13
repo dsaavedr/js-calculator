@@ -99,10 +99,17 @@ export default class Calc extends Component {
 
         if (this.state.addedOperator && val !== "-") {
             if (!/\d/.test(fullExp.substring(fullExp.length - 1))) {
-                this.setState(state => ({
-                    fullExp: state.fullExp.slice(0, -1) + val,
-                    currentExp: val
-                }));
+                if (!/\d/.test(fullExp.substring(fullExp.length - 2))) {
+                    this.setState(state => ({
+                        fullExp: state.fullExp.slice(0, -2) + val,
+                        currentExp: val
+                    }));
+                } else {
+                    this.setState(state => ({
+                        fullExp: state.fullExp.slice(0, -1) + val,
+                        currentExp: val
+                    }));
+                }
             } else if (fullExp.substring(fullExp.length - 1) !== "-") {
                 this.setState(state => ({
                     fullExp: state.fullExp + val,
